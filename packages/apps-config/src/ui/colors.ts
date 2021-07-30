@@ -89,6 +89,7 @@ const chainUnitv = '#1452F0';
 const chainVln = '#33cc33';
 const chainWeb3games = 'linear-gradient(45deg, #0099F7 0%, #F11712 100%)';
 const chainWestlake = 'linear-gradient(-90deg, #9400D3 0%, #5A5CA9 50%, #00BFFF 100%)';
+const chainPhuQuocdog = '#20232a';
 // based on node name
 // alphabetical
 const nodeApron = 'linear-gradient(45deg, #0099F7 0%, #2E49EB 100%)';
@@ -157,6 +158,7 @@ export { emptyColor };
 // Alphabetical overrides based on the actual matched chain name
 // NOTE: This is as retrieved via the system.chain RPC
 export const chainColors: Record<string, string> = Object.entries({
+  'Phu Quoc Dog Mainnet': chainPhuQuocdog,
   'acala mandala pc1': chainRoccoAcala,
   'acala mandala pc2': chainRoccoAcala,
   'Aleph Zero': chainAleph,
@@ -291,6 +293,7 @@ export const chainColors: Record<string, string> = Object.entries({
 // Alphabetical overrides based on the actual software node type
 // NOTE: This is as retrieved via the system.name RPC
 export const nodeColors = Object.entries({
+  'Substrate Node': "#9fc745",
   'Apron Node': nodeApron,
   Basilisk: nodeBasilisk,
   'Bifrost Node': nodeBifrost,

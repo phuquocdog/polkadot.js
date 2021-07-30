@@ -18,6 +18,14 @@ import { expandEndpoints } from './util';
 export function createProduction (t: TFunction, firstOnly?: boolean): LinkOption[] {
   return expandEndpoints(t, [
     {
+      dnslink: 'phuquocdog',
+      info: 'phuquocdog',
+      text: t('rpc.prod.centrifuge', 'Centrifuge', { ns: 'apps-config' }),
+      providers: {
+        Centrifuge: 'wss://node.phuquoc.dog'
+      }
+    },
+    {
       dnslink: 'centrifuge',
       info: 'centrifuge',
       text: t('rpc.prod.centrifuge', 'Centrifuge', { ns: 'apps-config' }),

@@ -24,6 +24,7 @@ function NetworkDisplay ({ apiUrl, className = '', setApiUrl, value: { icon, isC
     [apiUrl, providers]
   );
 
+
   const _selectUrl = useCallback(
     () => {
       const filteredProviders = providers.filter(({ url }) => !url.startsWith('light://'));

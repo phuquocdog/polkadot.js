@@ -126,6 +126,8 @@ import nodeZCloak from './nodes/zCloak.svg';
 import nodeZeitgeist from './nodes/zeitgeist.png';
 import nodeZenlink from './nodes/zenlink.svg';
 import nodeZero from './nodes/zero.svg';
+import nodePhuquodog from './nodes/phuquocdog.png';
+
 // last-resort fallback, just something empty
 import emptyLogo from './empty.svg';
 
@@ -402,6 +404,7 @@ export const specLogos = Object.entries({
 // (Generally would be the 'network' key in the known ss58 as per
 // https://github.com/polkadot-js/common/blob/master/packages/networks/src/index.ts)
 export const namedLogos: Record<string, unknown> = {
+  phuquocdog: nodePhuquodog,
   acala: nodeAcala,
   aleph: chainAleph,
   alexander: nodePolkadot,

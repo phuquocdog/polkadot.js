@@ -16,6 +16,8 @@ export function getSystemIcon (systemName: string, specName: string): 'beachball
 }
 
 export function getSystemColor (systemChain: string, systemName: string, specName: string): string | undefined {
+   console.log(systemChain + ' -> ' + systemName + 
+    '->' + specName);
   return (
     chainColors[sanitize(systemChain)] ||
     nodeColors[sanitize(systemName)] ||
