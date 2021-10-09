@@ -22,7 +22,7 @@ export function createProduction (t: TFunction, firstOnly?: boolean): LinkOption
       info: 'phuquocdog',
       text: t('rpc.prod.centrifuge', 'Centrifuge', { ns: 'apps-config' }),
       providers: {
-        Centrifuge: 'wss://node.phuquoc.dog'
+        Centrifuge: 'wss://rpc.phuquoc.dog'
       }
     },
     {

@@ -158,7 +158,7 @@ export { emptyColor };
 // Alphabetical overrides based on the actual matched chain name
 // NOTE: This is as retrieved via the system.chain RPC
 export const chainColors: Record<string, string> = Object.entries({
-  'Phu Quoc Dog Mainnet': chainPhuQuocdog,
+  'Phuquocdog Main Network': chainPhuQuocdog,
   'acala mandala pc1': chainRoccoAcala,
   'acala mandala pc2': chainRoccoAcala,
   'Aleph Zero': chainAleph,
