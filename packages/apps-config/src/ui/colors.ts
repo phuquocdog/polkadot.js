@@ -89,7 +89,7 @@ const chainUnitv = '#1452F0';
 const chainVln = '#33cc33';
 const chainWeb3games = 'linear-gradient(45deg, #0099F7 0%, #F11712 100%)';
 const chainWestlake = 'linear-gradient(-90deg, #9400D3 0%, #5A5CA9 50%, #00BFFF 100%)';
-const chainPhuQuocdog = '#20232a';
+const chainPhuQuocdog = '#469b5a';
 // based on node name
 // alphabetical
 const nodeApron = 'linear-gradient(45deg, #0099F7 0%, #2E49EB 100%)';
