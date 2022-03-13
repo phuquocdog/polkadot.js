@@ -1,4 +1,4 @@
-// Copyright 2017-2021 @polkadot/app-parachains authors & contributors
+// Copyright 2017-2022 @polkadot/app-parachains authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import type { StorageKey } from '@polkadot/types';
@@ -7,7 +7,7 @@ import type { Proposals } from './types';
 
 import { useMemo } from 'react';
 
-import { useApi, useCallMulti, useEventTrigger, useIsMountedRef, useMapEntries, useMapKeys } from '@polkadot/react-hooks';
+import { createNamedHook, useApi, useCallMulti, useEventTrigger, useIsMountedRef, useMapEntries, useMapKeys } from '@polkadot/react-hooks';
 
 type MultiQuery = [SessionIndex | undefined, ParaId[] | undefined];
 
@@ -20,23 +20,25 @@ const optionsMulti = {
   defaultValue: [undefined, undefined] as MultiQuery
 };
 
-function extractProposalIds (keys: StorageKey<[ParaId]>[]): ParaId[] {
-  return keys.map(({ args: [id] }) => id);
-}
+const proposalOpts = {
+  transform: (keys: StorageKey<[ParaId]>[]): ParaId[] =>
+    keys.map(({ args: [id] }) => id)
+};
 
-function extractScheduled (entries: [StorageKey<[SessionIndex]>, ParaId[]][]): Scheduled[] {
-  return entries.map(([{ args: [sessionIndex] }, scheduledIds]) => ({
-    scheduledIds,
-    sessionIndex
-  }));
-}
+const scheduledOpts = {
+  transform: (entries: [StorageKey<[SessionIndex]>, ParaId[]][]): Scheduled[] =>
+    entries.map(([{ args: [sessionIndex] }, scheduledIds]) => ({
+      scheduledIds,
+      sessionIndex
+    }))
+};
 
-export default function useProposals (): Proposals | undefined {
+function useProposalsImpl (): Proposals | undefined {
   const { api } = useApi();
   const mountedRef = useIsMountedRef();
   const trigger = useEventTrigger([api.events.proposeParachain?.ProposeParachain]);
-  const proposalIds = useMapKeys(api.query.proposeParachain?.proposals, { at: trigger.blockHash, transform: extractProposalIds });
-  const scheduled = useMapEntries(api.query.proposeParachain?.scheduledProposals, { at: trigger.blockHash, transform: extractScheduled });
+  const proposalIds = useMapKeys(api.query.proposeParachain?.proposals, proposalOpts, trigger.blockHash);
+  const scheduled = useMapEntries(api.query.proposeParachain?.scheduledProposals, scheduledOpts, trigger.blockHash);
   const [sessionIndex, approvedIds] = useCallMulti<MultiQuery>([
     api.query.session.currentIndex,
     api.query.proposeParachain?.approvedProposals
@@ -53,3 +55,5 @@ export default function useProposals (): Proposals | undefined {
     [approvedIds, mountedRef, proposalIds, sessionIndex, scheduled]
   );
 }
+
+export default createNamedHook('useProposals', useProposalsImpl);

@@ -8,5 +8,3 @@ A Portal into the Phu Quoc Dog and Substrate networks. Provides a view and inter
 
 This repo fork from project https://github.com/polkadot-js/apps
 
-
-## Building

@@ -1,4 +1,4 @@
-// Copyright 2017-2021 @polkadot/apps authors & contributors
+// Copyright 2017-2022 @polkadot/apps authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import queryString from 'query-string';
@@ -22,7 +22,7 @@ function getApiUrl (): string {
   //  - http://localhost:3000/?rpc=wss://substrate-rpc.parity.io/#/explorer
   //  - http://localhost:3000/#/explorer?rpc=wss://substrate-rpc.parity.io
   const urlOptions = queryString.parse(location.href.split('?')[1]);
-
+  console.log('urlOptions', urlOptions)
   // if specified, this takes priority
   if (urlOptions.rpc) {
     assert(!Array.isArray(urlOptions.rpc), 'Invalid WS endpoint specified');
@@ -36,6 +36,8 @@ function getApiUrl (): string {
   }
 
   const endpoints = createWsEndpoints(<T = string>(): T => ('' as unknown as T));
+  console.log('endpoints', endpoints)
+
   const { ipnsChain } = extractIpfsDetails();
 
   // check against ipns domains (could be expanded to others)

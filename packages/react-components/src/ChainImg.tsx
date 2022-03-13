@@ -1,4 +1,4 @@
-// Copyright 2017-2021 @polkadot/apps authors & contributors
+// Copyright 2017-2022 @polkadot/apps authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useMemo } from 'react';
@@ -20,8 +20,7 @@ function sanitize (value?: string): string {
 }
 
 function ChainImg ({ className = '', isInline, logo, onClick, withoutHl }: Props): React.ReactElement<Props> {
-      
-  logo = "phuquocdog";
+  console.log('logo', logo)
   const { specName, systemChain, systemName } = useApi();
   const [isEmpty, img] = useMemo((): [boolean, string] => {
     const found = logo
@@ -30,10 +29,11 @@ function ChainImg ({ className = '', isInline, logo, onClick, withoutHl }: Props
 
     return [!found || logo === 'empty', (found || emptyLogos.empty) as string];
   }, [logo, specName, systemChain, systemName]);
-  console.log('------>logo' + img);
+
   return (
     <img
       alt='chain logo'
+      className={`${className}${(isEmpty && !withoutHl) ? ' highlight--bg' : ''}${isInline ? ' isInline' : ''}`}
       onClick={onClick}
       src={img}
     />

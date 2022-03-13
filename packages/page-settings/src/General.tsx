@@ -1,4 +1,4 @@
-// Copyright 2017-2021 @polkadot/app-settings authors & contributors
+// Copyright 2017-2022 @polkadot/app-settings authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import type { Option } from '@polkadot/apps-config/settings/types';
@@ -11,7 +11,6 @@ import { allNetworks } from '@polkadot/networks';
 import { Button, Dropdown, MarkWarning } from '@polkadot/react-components';
 import { useApi, useLedger } from '@polkadot/react-hooks';
 import { settings } from '@polkadot/ui-settings';
-import { isUndefined } from '@polkadot/util';
 
 import { useTranslation } from './translate';
 import { createIdenticon, createOption, save, saveAndReload } from './util';
@@ -20,11 +19,11 @@ interface Props {
   className?: string;
 }
 
-const ledgerConnOptions = settings.availableLedgerConn;
+const _ledgerConnOptions = settings.availableLedgerConn;
 
 function General ({ className = '' }: Props): React.ReactElement<Props> {
   const { t } = useTranslation();
-  const { api, isApiReady } = useApi();
+  const { chainSS58, isApiReady, isElectron } = useApi();
   const { isLedgerCapable } = useLedger();
   // tri-state: null = nothing changed, false = no reload, true = reload required
   const [changed, setChanged] = useState<boolean | null>(null);
@@ -33,6 +32,11 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
 
     return { ...values, uiTheme: values.uiTheme === 'dark' ? 'dark' : 'light' };
   });
+
+  const ledgerConnOptions = useMemo(
+    () => _ledgerConnOptions.filter(({ value }) => !isElectron || value !== 'webusb'),
+    [isElectron]
+  );
 
   const iconOptions = useMemo(
     () => settings.availableIcons
@@ -43,27 +47,21 @@ function General ({ className = '' }: Props): React.ReactElement<Props> {
 
   const prefixOptions = useMemo(
     (): (Option | React.ReactNode)[] => {
-      let ss58Format = api.registry.chainSS58;
-
-      if (isUndefined(ss58Format)) {
-        ss58Format = 42;
-      }
-
-      const network = allNetworks.find(({ prefix }) => prefix === ss58Format);
+      const network = allNetworks.find(({ prefix }) => prefix === chainSS58);
 
       return createSs58(t).map((o) =>
         createOption(o, ['default'], 'empty', (
           o.value === -1
             ? isApiReady
               ? network
-                ? ` (${network.displayName}, ${ss58Format || 0})`
-                : ` (${ss58Format || 0})`
+                ? ` (${network.displayName}, ${chainSS58 || 0})`
+                : ` (${chainSS58 || 0})`
               : undefined
             : ` (${o.value})`
         ))
       );
     },
-    [api, isApiReady, t]
+    [chainSS58, isApiReady, t]
   );
 
   const themeOptions = useMemo(
